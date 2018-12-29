@@ -44,11 +44,12 @@
             }
             
             sampler2D _MainTex;
+            float4 _Color;
             
             float4 frag(v2f input) : SV_Target 
             {   
                 float4 color = tex2D(_MainTex, input.uv);
-                return color;
+                return lerp(float4(0,0,0,1), color, _Color);
             }
             
             ENDCG

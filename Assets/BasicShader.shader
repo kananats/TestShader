@@ -3,7 +3,9 @@
     Properties
     {
         _MainTex("Texture", 2D) = "white" { }
+        _SubTex("Texture", 2D) = "white" { }
         _Color("Color", Color) = (1, 1, 1, 1)
+        _Tween("Tween", Range(0, 1)) = 0
     }
 
     SubShader
@@ -44,11 +46,15 @@
             }
             
             sampler2D _MainTex;
+            sampler2D _SubTex;
             float4 _Color;
+            float _Tween;
             
             float4 frag(v2f input) : SV_Target 
             {   
-                float4 color = tex2D(_MainTex, input.uv * 2);
+                float4 color1 = tex2D(_MainTex, input.uv * 2);
+                float4 color2 = tex2D(_SubTex, input.uv * 2);
+                float4 color = lerp(color1, color2, _Tween);
                 return lerp(float4(0, 0, 0, 1), color, _Color);
             }
             
